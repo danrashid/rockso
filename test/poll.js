@@ -1,4 +1,4 @@
-/* global $, chart */
+/* global $, chart, legend */
 'use strict';
 
 $(document).on('submit', '#push', function () {
@@ -15,6 +15,7 @@ $(document).on('submit', '#push', function () {
     layer.values.shift();
   });
   chart.update();
+  legend.update();
 
   return false;
 });
