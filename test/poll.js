@@ -15,7 +15,7 @@ $(document).on('submit', '#push', function () {
     layer.values.shift();
   });
   chart.update();
-  legend.update();
+  legend.populate();
 
   return false;
 });

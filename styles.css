@@ -1,7 +1,12 @@
-body,
+body {
+  color: Gray;
+  font: 1em/1.4em sans-serif;
+}
+
 input,
 button {
-  font: 1em/1.4em sans-serif;
+  font: inherit;
+  line-height: inherit;
 }
 
 svg {
@@ -35,22 +40,17 @@ rect {
 }
 
 #legend {
-  width: 15%;
+  width: 20%;
 }
 
 #chart {
-  width: 85%;
-}
-
-#legend label {
-  display: block;
-  margin-bottom: .5em;
-}
-
-#legend span {
-  padding-left: .5em;
+  width: 80%;
 }
 
 #tooltip {
   clear: left;
+}
+
+td:not(:first-child) {
+  padding-left: 1em;
 }

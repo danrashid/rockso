@@ -1,4 +1,4 @@
-/* global $ */
+/* global $, legendTemplate */
 'use strict';
 
 var my = my || {};
@@ -17,38 +17,30 @@ my.legend = function (sel, data) {
     $checkedInputs.prop('disabled', $checkedInputs.length === 1);
   }
 
-  function update() {
+  function populate() {
     var total = data.reduce(function (a, b) {
       return a + b.values.reduce(function (c, d) {
         return c + d.y;
       }, 0);
     }, 0);
 
-    data.forEach(function (layer) {
-      var $label = $('[for="' + layer.guid + '"]'),
-        layerTotal = layer.values.reduce(function (a, b) {
+    $el.html(legendTemplate({
+      total: total,
+      layers: data.map(function (layer) {
+        var layerTotal = layer.values.reduce(function (a, b) {
           return a + b.y;
-        }, 0),
-        percent = Math.round((layerTotal / total) * 10000) / 100;
+        }, 0);
 
-      $label.find('.total').html(layerTotal);
-      $label.find('.percent').html(percent + '%');
-    });
-  }
-
-  (function () {
-    data.forEach(function (layer) {
-      $('<label for="' + layer.guid + '">')
-        .css('color', layer.color)
-        .append('<input type="checkbox" id="' + layer.guid + '">')
-        .append('<span class="percent">')
-        .append('<span class="name">' + layer.guid)
-        .append('<span class="total">')
-        .appendTo($el);
-    });
-    update();
+        return {
+          color: layer.color,
+          guid: layer.guid,
+          percent: Math.round((layerTotal / total) * 10000) / 100,
+          total: layerTotal
+        };
+      })
+    }));
     setChecked();
-  })();
+  }
 
   $el.on('click', 'input', function () {
     var $input = $(this),
@@ -63,7 +55,9 @@ my.legend = function (sel, data) {
 
   $(window).on('hashchange', setChecked);
 
+  populate();
+
   return {
-    update: update
+    populate: populate
   };
 };

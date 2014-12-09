@@ -1,0 +1,12 @@
+table
+  each layer in layers
+    tr
+      td(style="color:#{layer.color}")
+        label
+          input(type="checkbox", id=layer.guid)
+          |  #{layer.guid}
+      td(align="right") #{layer.percent}%
+      td= layer.total
+  tr
+    td(align="right" colspan="2") Total
+    td= total
